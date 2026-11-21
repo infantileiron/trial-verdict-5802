@@ -2,3 +2,8 @@
 -- Natural keys: users.email, experiments.code, events(experiment_id,user_key,kind).
 -- Foreign keys connect events and decisions to experiment definitions.
 -- Decisions.snapshot stores the frozen experimental protocol and event set.
+--
+-- 002 净收入对账（随 metadata 自动建表）：
+-- ledger_entries.external_id 唯一：支付/退款重复投递幂等丢弃，不多计。
+-- 订单按首次支付归属实验与组别；status: held 暂挂 / posted 已记账 / isolated 超额退款隔离。
+-- 退款 payment_entry_id 回冲原订单，可跨日；recon_batches 记录 pending/success/failed 批次。

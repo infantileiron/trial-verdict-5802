@@ -1,4 +1,4 @@
-from datetime import datetime,timezone
+from datetime import datetime
 from typing import Literal
 from pydantic import BaseModel,Field,model_validator
 class Login(BaseModel):
@@ -18,6 +18,20 @@ class EventInput(BaseModel):
  def dates(self):
   if self.occurred_at.tzinfo is None:raise ValueError('事件时间必须带时区')
   return self
+class LedgerItem(BaseModel):
+ external_id:str=Field(min_length=1,max_length=80)
+ kind:Literal['payment','refund']
+ order_id:str=Field(min_length=1,max_length=80)
+ user_key:str=Field(min_length=1,max_length=80)
+ amount:float=Field(gt=0,allow_inf_nan=False)
+ occurred_at:datetime
+ @model_validator(mode='after')
+ def dates(self):
+  if self.occurred_at.tzinfo is None:raise ValueError('流水时间必须带时区')
+  return self
+class BatchInput(BaseModel):
+ source:str=Field(default='manual',min_length=1,max_length=120)
+ entries:list[LedgerItem]=Field(min_length=1,max_length=5000)
 class RunInput(BaseModel):
  experiment_id:int=Field(gt=0)
 class RationaleInput(BaseModel):

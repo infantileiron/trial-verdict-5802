@@ -1,1 +1,2 @@
 export const GROUPS=['A','B'];export const EVENT_KINDS=['exposure','activation'];export const ROLES=['admin','analyst','viewer'];export const STATES=['queued','running','done','failed'];export const ACTIONS={publish_b:'上线 B',keep_a:'保留 A'};
+export const LEDGER_KINDS={payment:'支付',refund:'退款'};export const LEDGER_STATUSES={held:'暂挂',posted:'已记账',isolated:'隔离'};export const BATCH_STATES={pending:'待处理',success:'成功',failed:'失败'};
